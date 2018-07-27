@@ -1,0 +1,24 @@
+---
+# tasks file for setup-apache-jmeter
+- name: Install VNC Server
+  become: True
+  package:
+    name: "{{ item }}"
+    update_cache: yes
+    state: latest
+  with_items:
+    - tigervnc-server
+
+- name: Unarchive the JMeter archive
+  become: True
+  unarchive:
+    src: "http://ftp.jaist.ac.jp/pub/apache/jmeter/binaries/apache-jmeter-{{ apache_jmeter_version }}.tgz"
+    dest: /usr/local
+    remote_src: yes
+
+- name: Create a symbolic link to JMeter directory
+  become: True
+  file:
+    src: "/usr/local/apache-jmeter-{{ apache_jmeter_version }}"
+    dest: /usr/local/apache-jmeter
+    state: link
