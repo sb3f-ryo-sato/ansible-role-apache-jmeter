@@ -1,3 +1,32 @@
 ---
+##
+## 13.1 Setting up SSL - Apache JMeter - User's Manual: Remote (Distributed) Testing
+## Apache JMeter - User's Manual: Remote (Distributed) Testing
+##
+## 19.7 Remote hosts and RMI configuration - Apache JMeter - User's Manual: Properties Reference
+## https://jmeter.apache.org/usermanual/properties_reference.html#remote
+##
+
 # defaults file for setup-apache-jmeter
 apache_jmeter_version: 4.0
+
+## JAVA_HOME
+java_home: /etc/alternatives/jre
+
+## HEAP
+initial_heap: 1
+maximum_heap: 1
+max_metaspace_size: 256
+
+## JMETER_HOME
+jmeter_home: /usr/local/apache-jmeter
+
+## JMETER_LANGUAGE
+user_language: ja
+user_region: JP
+
+## The list of JMeter server(s)
+remote_hosts: jmeter11,jmeter12,jmeter13
+
+## Keystore file that contains private key
+server_rmi_ssl_keystore_file: "{{ jmeter_home }}/bin/rmi_keystore.jks"

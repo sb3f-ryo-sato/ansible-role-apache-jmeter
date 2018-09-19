@@ -1,13 +1,22 @@
 ---
 # tasks file for setup-apache-jmeter
-- name: Install VNC Server
+- name: Install Java Runtime Environment (JRE)
   become: True
   package:
     name: "{{ item }}"
     update_cache: yes
     state: latest
   with_items:
-    - tigervnc-server
+    - java-1.8.0-openjdk
+
+- name: Check the user name of UID 1000
+  command: id -un 1000
+  register: uid1000
+
+- name: Check the group name of UID 1000
+  user:
+    name: "{{ uid1000.stdout }}"
+  register: uid1000_info
 
 - name: Unarchive the JMeter archive
   become: True
@@ -16,9 +25,38 @@
     dest: /usr/local
     remote_src: yes
 
+- name: Change owner and group of JMeter directory
+  become: True
+  file:
+    path: /usr/local/apache-jmeter-{{ apache_jmeter_version }}
+    owner: "{{ uid1000_info.uid }}"
+    group: "{{ uid1000_info.group }}"
+    recurse: yes
+
 - name: Create a symbolic link to JMeter directory
   become: True
   file:
     src: "/usr/local/apache-jmeter-{{ apache_jmeter_version }}"
-    dest: /usr/local/apache-jmeter
+    dest: "{{ jmeter_home }}"
     state: link
+
+- name: Deploy the environment variable file for JMeter
+  become: True
+  template:
+    src: apache-jmeter.sh.j2
+    dest: /etc/profile.d/apache-jmeter.sh
+    owner: root
+    group: root
+    mode: 0644
+    seuser: system_u
+    serole: object_r
+    setype: bin_t
+    selevel: s0
+
+- name: Add the JMeter settings
+  become: True
+  blockinfile:
+    path: "{{ jmeter_home }}/bin/user.properties"
+    block: |
+      server.rmi.ssl.keystore.file={{ server_rmi_ssl_keystore_file }}
+      #remote_hosts={{ remote_hosts }}

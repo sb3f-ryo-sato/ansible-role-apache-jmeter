@@ -1,0 +1,5 @@
+---
+- name: Setup the Apache JMeter server
+  hosts: jmeter_servers
+  roles:
+    - setup-apache-jmeter

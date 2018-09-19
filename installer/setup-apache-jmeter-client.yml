@@ -1,0 +1,5 @@
+---
+- name: Setup the Apache JMeter client
+  hosts: localhost
+  roles:
+    - setup-apache-jmeter
