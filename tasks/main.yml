@@ -40,6 +40,15 @@
     dest: "{{ jmeter_home }}"
     state: link
 
+- name: Deploy setenv.sh
+  become: True
+  template:
+    src: setenv.sh.j2
+    dest: "{{ jmeter_home }}/bin/setenv.sh"
+    owner: "{{ uid1000_info.uid }}"
+    group: "{{ uid1000_info.group }}"
+    mode: 0644
+
 - name: Deploy the environment variable file for JMeter
   become: True
   template:

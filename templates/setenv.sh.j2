@@ -1,0 +1,14 @@
+#!/bin/bash
+##
+## 1.4 Running JMeter - Apache JMeter - User's Manual: Getting Started
+## https://jmeter.apache.org/usermanual/get-started.html#running
+##
+
+# This is the file bin/setenv.sh,
+# it will be sourced in by bin/jmeter
+
+# Use a bigger heap, but a smaller metaspace, than the default
+export HEAP='-Xms{{ initial_heap }}G -Xmx{{ maximum_heap }}G -XMaxMetaspaceSize={{ max_metaspace_size }}m'
+
+# Try to guess the locale from the OS. The space as value is on purpose!
+#export JMETER_LANGUAGE=" "
