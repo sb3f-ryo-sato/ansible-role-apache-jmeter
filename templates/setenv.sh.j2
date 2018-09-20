@@ -8,7 +8,7 @@
 # it will be sourced in by bin/jmeter
 
 # Use a bigger heap, but a smaller metaspace, than the default
-export HEAP='-Xms{{ initial_heap }}g -Xmx{{ maximum_heap }}g -X:MaxMetaspaceSize={{ max_metaspace_size }}m'
+export HEAP="-Xms{{ initial_heap }}g -Xmx{{ maximum_heap }}g -XX:MaxMetaspaceSize={{ max_metaspace_size }}m"
 
 # Try to guess the locale from the OS. The space as value is on purpose!
-#export JMETER_LANGUAGE=" "
+export JMETER_LANGUAGE="-Duser.language={{ user_language }} -Duser.region={{ user_region }}"

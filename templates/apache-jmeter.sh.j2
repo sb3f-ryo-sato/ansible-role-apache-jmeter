@@ -6,8 +6,7 @@
 ## awt.useSystemAAFontSettings - System Properties for Java 2D Technology
 ## https://docs.oracle.com/javase/8/docs/technotes/guides/2d/flags.html#aaFonts
 ##
-export JAVA_HOME='{{ java_home }}'
-export JMETER_HOME='{{ jmeter_home }}'
-export JMETER_LANGUAGE='-Duser.language={{ user_language }} -Duser.region={{ user_region }}'
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+export JAVA_HOME="{{ java_home }}"
+export JMETER_HOME="{{ jmeter_home }}"
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
 export PATH=${JAVA_HOME}/bin:/usr/local/apache-jmeter/bin:${PATH}
