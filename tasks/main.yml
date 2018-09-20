@@ -47,7 +47,7 @@
     dest: "{{ jmeter_home }}/bin/setenv.sh"
     owner: "{{ uid1000_info.uid }}"
     group: "{{ uid1000_info.group }}"
-    mode: 0644
+    mode: 0755
 
 - name: Deploy the environment variable file for JMeter
   become: True
