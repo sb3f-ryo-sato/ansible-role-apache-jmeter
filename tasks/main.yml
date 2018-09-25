@@ -18,10 +18,21 @@
     name: "{{ uid1000.stdout }}"
   register: uid1000_info
 
+- name: Download the file list
+  get_url:
+    url: ftp://ftp.jaist.ac.jp/pub/apache/jmeter/binaries/
+    dest: /var/tmp/apache-jmeter-list.log
+  delegate_to: 127.0.0.1
+
+- name: Check the latest version
+  shell: grep -F '.tgz' /var/tmp/apache-jmeter-list.log | awk '{print $9}'
+  register: jmeter_version
+  delegate_to: 127.0.0.1
+
 - name: Unarchive the JMeter archive
   become: True
   unarchive:
-    src: "http://ftp.jaist.ac.jp/pub/apache/jmeter/binaries/apache-jmeter-{{ apache_jmeter_version }}.tgz"
+    src: "http://ftp.jaist.ac.jp/pub/apache/jmeter/binaries/{{ jmeter_version.stdout }}"
     dest: /usr/local
     remote_src: yes
 
