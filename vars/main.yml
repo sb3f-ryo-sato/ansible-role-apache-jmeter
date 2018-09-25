@@ -1,2 +1,3 @@
 ---
 # vars file for setup-apache-jmeter
+jmeter_file_list: /var/tmp/apache-jmeter-list.log
